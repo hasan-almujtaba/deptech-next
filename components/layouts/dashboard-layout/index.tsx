@@ -11,17 +11,14 @@ import {
 } from '@headlessui/react'
 import {
   Bars3Icon,
-  CalendarIcon,
-  ChartPieIcon,
   Cog6ToothIcon,
-  DocumentDuplicateIcon,
   FolderIcon,
   HomeIcon,
-  UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import Cookies from 'js-cookie'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
@@ -30,16 +27,9 @@ import { Layout } from 'types'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Team', href: '#', icon: UsersIcon, current: false },
-  { name: 'Projects', href: '#', icon: FolderIcon, current: false },
-  { name: 'Calendar', href: '#', icon: CalendarIcon, current: false },
-  { name: 'Documents', href: '#', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Reports', href: '#', icon: ChartPieIcon, current: false },
-]
-const teams = [
-  { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
-  { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
-  { id: 3, name: 'Workcation', href: '#', initial: 'W', current: false },
+  { name: 'Category', href: '#', icon: FolderIcon, current: false },
+  { name: 'Product', href: '#', icon: FolderIcon, current: false },
+  { name: 'Transaction', href: '#', icon: FolderIcon, current: false },
 ]
 
 const MobileSidebar = () => (
@@ -83,41 +73,6 @@ const MobileSidebar = () => (
                   />
                   {item.name}
                 </Link>
-              </li>
-            ))}
-          </ul>
-        </li>
-        <li>
-          <div className="text-xs font-semibold leading-6 text-gray-400">
-            Your teams
-          </div>
-          <ul
-            role="list"
-            className="-mx-2 mt-2 space-y-1"
-          >
-            {teams.map((team) => (
-              <li key={team.name}>
-                <a
-                  href={team.href}
-                  className={twMerge(
-                    team.current
-                      ? 'bg-gray-50 text-slate-600'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-slate-600',
-                    'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
-                  )}
-                >
-                  <span
-                    className={twMerge(
-                      team.current
-                        ? 'border-slate-600 text-slate-600'
-                        : 'border-gray-200 text-gray-400 group-hover:border-slate-600 group-hover:text-slate-600',
-                      'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium'
-                    )}
-                  >
-                    {team.initial}
-                  </span>
-                  <span className="truncate">{team.name}</span>
-                </a>
               </li>
             ))}
           </ul>
@@ -186,53 +141,6 @@ const DesktopSidebar = () => (
               ))}
             </ul>
           </li>
-          <li>
-            <div className="text-xs font-semibold leading-6 text-gray-400">
-              Your teams
-            </div>
-            <ul
-              role="list"
-              className="-mx-2 mt-2 space-y-1"
-            >
-              {teams.map((team) => (
-                <li key={team.name}>
-                  <a
-                    href={team.href}
-                    className={twMerge(
-                      team.current
-                        ? 'bg-gray-50 text-slate-600'
-                        : 'text-gray-700 hover:bg-gray-50 hover:text-slate-600',
-                      'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
-                    )}
-                  >
-                    <span
-                      className={twMerge(
-                        team.current
-                          ? 'border-slate-600 text-slate-600'
-                          : 'border-gray-200 text-gray-400 group-hover:border-slate-600 group-hover:text-slate-600',
-                        'flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border bg-white text-[0.625rem] font-medium'
-                      )}
-                    >
-                      {team.initial}
-                    </span>
-                    <span className="truncate">{team.name}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </li>
-          <li className="mt-auto">
-            <a
-              href="#"
-              className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-slate-600"
-            >
-              <Cog6ToothIcon
-                className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-slate-600"
-                aria-hidden="true"
-              />
-              Settings
-            </a>
-          </li>
         </ul>
       </nav>
     </div>
@@ -241,6 +149,8 @@ const DesktopSidebar = () => (
 
 export function DashboardLayout({ children }: Layout) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const { push } = useRouter()
 
   return (
     <>
@@ -384,7 +294,10 @@ export function DashboardLayout({ children }: Layout) {
                                 focus ? 'bg-gray-500' : '',
                                 'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900'
                               )}
-                              onClick={() => Cookies.remove(keys.localStorage)}
+                              onClick={() => {
+                                Cookies.remove(keys.localStorage)
+                                push('/')
+                              }}
                             >
                               Sign out
                             </button>

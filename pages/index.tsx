@@ -8,7 +8,7 @@ const Home: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Home</title>
+        <title>Login</title>
       </Head>
 
       <LoginForm />
