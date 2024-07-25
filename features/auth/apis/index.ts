@@ -2,7 +2,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 
 import { axiosInstance } from 'apis'
-import { TLoginRequest } from 'features/auth'
+import { TLoginRequest, TUpdateProfileRequest } from 'features/auth'
 // import {
 //   TChangePasswordRequest,
 //   TLoginRequest,
@@ -82,3 +82,20 @@ export const logoutRequest = async () => {
 //     }
 //   }
 // }
+
+export const updateProfileRequest = async (request: TUpdateProfileRequest) => {
+  try {
+    const { data } = await axiosInstance.put('/update-profile', request)
+
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      // Access to config, request, and response
+      // toast.error(error.response?.data.message)
+
+      throw new Error(error.response?.data.message)
+    } else {
+      // Just a stock error
+    }
+  }
+}

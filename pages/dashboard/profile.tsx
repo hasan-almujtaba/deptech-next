@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
 import { DashboardLayout } from 'components/layouts'
-import { ChangePasswordForm, PersonalInformationForm } from 'features/auth'
+import { ProfileForm } from 'features/auth'
 import { NextPageWithLayout } from 'types'
 
 const Dashboard: NextPageWithLayout = () => {
@@ -12,9 +12,7 @@ const Dashboard: NextPageWithLayout = () => {
       </Head>
 
       <div className="divide-y divide-white/5">
-        <PersonalInformationForm />
-
-        <ChangePasswordForm />
+        <ProfileForm />
       </div>
     </>
   )
