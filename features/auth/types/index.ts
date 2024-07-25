@@ -1,2 +1,4 @@
-export * from './request'
-export * from './response'
+export type TLoginRequest = {
+  email: string
+  password: string
+}

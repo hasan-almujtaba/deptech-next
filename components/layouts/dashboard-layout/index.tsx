@@ -9,7 +9,6 @@ import {
   Transition,
   TransitionChild,
 } from '@headlessui/react'
-import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import {
   Bars3Icon,
   CalendarIcon,
@@ -24,10 +23,10 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import Avatar from 'react-avatar'
 import { twMerge } from 'tailwind-merge'
+import { useLocalStorage } from 'usehooks-ts'
 
-import { useAuth } from 'features/auth'
+import { keys } from 'config'
 import { Layout } from 'types'
 
 const navigation = [
@@ -242,21 +241,14 @@ const DesktopSidebar = () => (
 )
 
 export function DashboardLayout({ children }: Layout) {
-  const { user, isLoading, logout } = useAuth()
+  const [value, setValue] = useLocalStorage(keys.localStorage, '')
 
   const { push } = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
-    if (!user && !isLoading) {
-      push('/login')
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isLoading])
-
-  if (!user || isLoading) {
-    return <p>loading...</p>
-  }
+    if (!value) push('/')
+  }, [value])
 
   return (
     <>
@@ -353,7 +345,7 @@ export function DashboardLayout({ children }: Layout) {
                     <MenuButton className="-m-1.5 flex items-center p-1.5">
                       <span className="sr-only">Open user menu</span>
 
-                      <Avatar
+                      {/* <Avatar
                         name={user.name}
                         size="36"
                         className="rounded-full"
@@ -369,7 +361,7 @@ export function DashboardLayout({ children }: Layout) {
                           className="ml-2 h-5 w-5 text-gray-400"
                           aria-hidden="true"
                         />
-                      </span>
+                      </span> */}
                     </MenuButton>
                     <Transition
                       enter="transition ease-out duration-100"
@@ -400,7 +392,6 @@ export function DashboardLayout({ children }: Layout) {
                                 focus ? 'bg-gray-50' : '',
                                 'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900'
                               )}
-                              onClick={logout}
                             >
                               Sign out
                             </button>

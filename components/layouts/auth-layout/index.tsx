@@ -1,30 +1,37 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 
-import { useAuth } from 'features/auth'
+import { keys } from 'config'
 import { Layout } from 'types'
 
 export const AuthLayout = ({ children }: Layout) => {
-  const { user, isLoading } = useAuth()
-  const { push } = useRouter()
+  const [value] = useLocalStorage(keys.localStorage, '')
+  const { push, pathname } = useRouter()
 
   useEffect(() => {
-    if (!isLoading && user) {
-      push('/dashboard')
+    if (value) {
+      if (pathname === '/login') {
+        push('/dashboard')
+      }
+    } else {
+      if (pathname !== '/login') {
+        push('/login')
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, isLoading])
+  }, [value, pathname])
 
   // Render loading indicator if user is authenticated but still loading
-  if (isLoading) {
-    return <p>loading...</p>
-  }
+  // if (isLoading) {
+  //   return <p>loading...</p>
+  // }
 
-  // Render the login page only if the user is not authenticated
-  if (!user) {
+  // Render the children (login page) only if the user is not authenticated
+  if (!value && pathname === '/login') {
     return <div>{children}</div>
   }
 
-  // Redirect the user to the dashboard if authenticated
+  // Render nothing while redirecting
   return null
 }

@@ -1,7 +1,7 @@
 import Head from 'next/head'
 
-import { DefaultLayout } from 'components/layouts'
-import { FeatureList } from 'features/information'
+import { AuthLayout } from 'components/layouts'
+import { LoginForm } from 'features/auth'
 import { NextPageWithLayout } from 'types'
 
 const Home: NextPageWithLayout = () => {
@@ -11,13 +11,13 @@ const Home: NextPageWithLayout = () => {
         <title>Home</title>
       </Head>
 
-      <FeatureList />
+      <LoginForm />
     </>
   )
 }
 
 Home.getLayout = (page) => {
-  return <DefaultLayout>{page}</DefaultLayout>
+  return <AuthLayout>{page}</AuthLayout>
 }
 
 export default Home

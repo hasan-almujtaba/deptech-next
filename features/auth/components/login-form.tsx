@@ -1,25 +1,47 @@
 /* eslint-disable @next/next/no-img-element */
+
+import { DevTool } from '@hookform/devtools'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
+import { useLocalStorage } from 'usehooks-ts'
+import * as yup from 'yup'
 
 import { Button } from 'components/ui/button'
 import { Input } from 'components/ui/input'
 import { PasswordInput } from 'components/ui/password-input'
-import { useAuth } from 'features/auth'
+import { keys } from 'config'
+import { TLoginRequest, loginRequest } from 'features/auth'
 
 type Inputs = {
   email: string
   password: string
 }
 
-export const LoginForm = () => {
-  const formMethods = useForm<Inputs>()
-  const { handleSubmit } = formMethods
+const schema = yup.object({
+  email: yup.string().required().email(),
+  password: yup.string().required(),
+})
 
-  const { login } = useAuth()
+export const LoginForm = () => {
+  const formMethods = useForm<Inputs>({ resolver: yupResolver(schema) })
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = formMethods
+  const [, setValue] = useLocalStorage(keys.localStorage, '')
+
+  const { mutate } = useMutation({
+    mutationFn: (data: TLoginRequest) => loginRequest(data),
+    onSuccess: (data) => {
+      setValue(data.token)
+    },
+  })
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    login(data)
+    mutate(data)
   }
 
   return (
@@ -45,11 +67,13 @@ export const LoginForm = () => {
               <Input
                 label="Email"
                 name="email"
+                errorMessage={errors.email?.message}
               />
 
               <PasswordInput
                 label="Password"
                 name="password"
+                errorMessage={errors.password?.message}
               />
 
               <Button
@@ -72,6 +96,8 @@ export const LoginForm = () => {
           </p>
         </div>
       </div>
+
+      <DevTool control={control} />
     </>
   )
 }

@@ -5,10 +5,11 @@ import { useFormContext } from 'react-hook-form'
 
 type TProps = {
   label: string
+  errorMessage?: string
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'type'>
 
 export const PasswordInput = (props: TProps) => {
-  const { label, name = '', ...rest } = props
+  const { label, errorMessage, name = '', ...rest } = props
 
   const { register } = useFormContext()
 
@@ -41,6 +42,11 @@ export const PasswordInput = (props: TProps) => {
           )}
         </button>
       </div>
+      {errorMessage && (
+        <div className="pointer-events-none mt-1 flex items-center pr-3">
+          {errorMessage}
+        </div>
+      )}
     </Field>
   )
 }
