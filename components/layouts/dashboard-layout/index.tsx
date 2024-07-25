@@ -25,6 +25,7 @@ import Avatar from 'react-avatar'
 import { twMerge } from 'tailwind-merge'
 
 import { keys } from 'config'
+import { useGetProfile } from 'features/auth'
 import { Layout } from 'types'
 
 const navigation = [
@@ -152,23 +153,20 @@ const DesktopSidebar = () => (
 export function DashboardLayout({ children }: Layout) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  const token = Cookies.get(keys.localStorage)
-
   const { push } = useRouter()
 
-  const [loading, setLoading] = useState(true)
+  const { data, isLoading } = useGetProfile()
+  const user = data?.data
 
   useEffect(() => {
-    if (!token) {
-      push('/')
-    } else {
-      setLoading(false)
+    if (!user && !isLoading) {
+      push('/login')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+  }, [user, isLoading])
 
-  if (loading) {
-    return <div>...loading</div>
+  if (!user || isLoading) {
+    return <p>loading...</p>
   }
 
   return (
@@ -267,7 +265,7 @@ export function DashboardLayout({ children }: Layout) {
                       <span className="sr-only">Open user menu</span>
 
                       <Avatar
-                        name="Hasan"
+                        name={user?.firstName}
                         size="36"
                         className="rounded-full"
                       />
@@ -276,7 +274,7 @@ export function DashboardLayout({ children }: Layout) {
                           className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                           aria-hidden="true"
                         >
-                          Hasan
+                          {user?.firstName}
                         </span>
                         <ChevronDownIcon
                           className="ml-2 h-5 w-5 text-gray-400"

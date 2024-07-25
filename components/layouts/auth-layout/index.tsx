@@ -1,29 +1,29 @@
-import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { keys } from 'config'
+import { useGetProfile } from 'features/auth'
 import { Layout } from 'types'
 
 export const AuthLayout = ({ children }: Layout) => {
-  const token = Cookies.get(keys.localStorage)
-
   const { push } = useRouter()
 
-  const [loading, setLoading] = useState(true)
+  const { data, isLoading } = useGetProfile()
+  const user = data?.data
 
   useEffect(() => {
-    if (token) {
+    if (user) {
       push('/dashboard')
-    } else {
-      setLoading(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+  }, [user, isLoading])
 
-  if (loading) {
+  if (isLoading) {
     return <div>...loading</div>
   }
 
-  return <div>{children}</div>
+  if (!user) {
+    return <div>{children}</div>
+  }
+
+  return null
 }

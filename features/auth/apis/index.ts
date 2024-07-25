@@ -11,7 +11,7 @@ import { TLoginRequest } from 'features/auth'
 
 export const getUserRequest = async () => {
   try {
-    const { data } = await axiosInstance.get('/api/user')
+    const { data } = await axiosInstance.get('/user')
 
     return data
   } catch (error) {
