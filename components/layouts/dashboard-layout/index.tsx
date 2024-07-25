@@ -20,11 +20,10 @@ import {
   UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
+import Cookies from 'js-cookie'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { useLocalStorage } from 'usehooks-ts'
 
 import { keys } from 'config'
 import { Layout } from 'types'
@@ -241,14 +240,7 @@ const DesktopSidebar = () => (
 )
 
 export function DashboardLayout({ children }: Layout) {
-  const [value, setValue] = useLocalStorage(keys.localStorage, '')
-
-  const { push } = useRouter()
   const [sidebarOpen, setSidebarOpen] = useState(false)
-
-  useEffect(() => {
-    if (!value) push('/')
-  }, [value])
 
   return (
     <>
@@ -389,9 +381,10 @@ export function DashboardLayout({ children }: Layout) {
                           {({ focus }) => (
                             <button
                               className={twMerge(
-                                focus ? 'bg-gray-50' : '',
+                                focus ? 'bg-gray-500' : '',
                                 'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900'
                               )}
+                              onClick={() => Cookies.remove(keys.localStorage)}
                             >
                               Sign out
                             </button>

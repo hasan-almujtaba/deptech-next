@@ -3,9 +3,10 @@
 import { DevTool } from '@hookform/devtools'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
+import Cookies from 'js-cookie'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useForm, SubmitHandler, FormProvider } from 'react-hook-form'
-import { useLocalStorage } from 'usehooks-ts'
 import * as yup from 'yup'
 
 import { Button } from 'components/ui/button'
@@ -31,12 +32,14 @@ export const LoginForm = () => {
     control,
     formState: { errors },
   } = formMethods
-  const [, setValue] = useLocalStorage(keys.localStorage, '')
+
+  const { push } = useRouter()
 
   const { mutate } = useMutation({
     mutationFn: (data: TLoginRequest) => loginRequest(data),
     onSuccess: (data) => {
-      setValue(data.token)
+      Cookies.set(keys.localStorage, data.token)
+      push('/dashboard')
     },
   })
 
