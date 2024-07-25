@@ -17,9 +17,11 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import Cookies from 'js-cookie'
+import { ChevronDownIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import Avatar from 'react-avatar'
 import { twMerge } from 'tailwind-merge'
 
 import { keys } from 'config'
@@ -150,7 +152,24 @@ const DesktopSidebar = () => (
 export function DashboardLayout({ children }: Layout) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  const token = Cookies.get(keys.localStorage)
+
   const { push } = useRouter()
+
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (!token) {
+      push('/')
+    } else {
+      setLoading(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token])
+
+  if (loading) {
+    return <div>...loading</div>
+  }
 
   return (
     <>
@@ -247,8 +266,8 @@ export function DashboardLayout({ children }: Layout) {
                     <MenuButton className="-m-1.5 flex items-center p-1.5">
                       <span className="sr-only">Open user menu</span>
 
-                      {/* <Avatar
-                        name={user.name}
+                      <Avatar
+                        name="Hasan"
                         size="36"
                         className="rounded-full"
                       />
@@ -257,13 +276,13 @@ export function DashboardLayout({ children }: Layout) {
                           className="ml-4 text-sm font-semibold leading-6 text-gray-900"
                           aria-hidden="true"
                         >
-                          {user.name}
+                          Hasan
                         </span>
                         <ChevronDownIcon
                           className="ml-2 h-5 w-5 text-gray-400"
                           aria-hidden="true"
                         />
-                      </span> */}
+                      </span>
                     </MenuButton>
                     <Transition
                       enter="transition ease-out duration-100"
@@ -291,7 +310,7 @@ export function DashboardLayout({ children }: Layout) {
                           {({ focus }) => (
                             <button
                               className={twMerge(
-                                focus ? 'bg-gray-500' : '',
+                                focus ? 'bg-gray-50' : '',
                                 'block w-full px-3 py-1 text-left text-sm leading-6 text-gray-900'
                               )}
                               onClick={() => {

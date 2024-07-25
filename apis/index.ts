@@ -1,4 +1,7 @@
 import axios from 'axios'
+import cookie from 'js-cookie'
+
+import { keys } from 'config'
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL
 
@@ -6,7 +9,10 @@ export const axiosInstance = axios.create({
   baseURL,
 })
 
-axiosInstance.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
-axiosInstance.defaults.withCredentials = true
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-;(axiosInstance.defaults as any).withXSRFToken = true
+axiosInstance.interceptors.request.use((config) => {
+  const token = cookie.get(keys.localStorage)
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  return config
+})
