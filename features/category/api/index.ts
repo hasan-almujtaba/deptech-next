@@ -11,8 +11,18 @@ export const getCategoryRequest = async () => {
     return data
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      // Access to config, request, and response
+      return null
+    }
+  }
+}
 
+export const getCategoryDetailRequest = async (id: number) => {
+  try {
+    const { data } = await axiosInstance.get(`/categories/${id}`)
+
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
       return null
     }
   }
@@ -25,8 +35,18 @@ export const storeCategoryRequest = async (dataRequest: TCategoryForm) => {
     return data
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      // Access to config, request, and response
+      return null
+    }
+  }
+}
 
+export const updateCategoryRequest = async (dataRequest: TCategoryForm) => {
+  try {
+    const { data } = await axiosInstance.put('/categories', dataRequest)
+
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
       return null
     }
   }

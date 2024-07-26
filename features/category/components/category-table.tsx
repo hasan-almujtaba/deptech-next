@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 import { Button } from 'components/ui/button'
 import { DataTable } from 'components/ui/table'
-import { TCategory, useGetCategory } from 'features/category'
+import { TCategory, useGetCategories } from 'features/category'
 
 export const columnHelper = createColumnHelper<TCategory>()
 
@@ -27,7 +27,7 @@ export const columns = [
             className="w-40"
             asChild
           >
-            <Link href={`/dashboard/${info.row.original.id}/category/`}>
+            <Link href={`/dashboard/category/${info.row.original.id}/edit/`}>
               Edit
             </Link>
           </Button>
@@ -44,7 +44,7 @@ export const columns = [
 ]
 
 export const CategoryTable = () => {
-  const { data } = useGetCategory()
+  const { data } = useGetCategories()
   const category = data?.data
 
   return (

@@ -1,9 +1,19 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getCategoryRequest } from '../api'
+import { getCategoryDetailRequest, getCategoryRequest } from '../api'
 
-export const useGetCategory = () =>
+export const useGetCategories = () =>
   useQuery({
-    queryKey: ['category'],
+    queryKey: ['categories'],
     queryFn: getCategoryRequest,
+  })
+
+type TUseCategoryParams = {
+  id: number
+}
+export const useGetCategory = (params: TUseCategoryParams) =>
+  useQuery({
+    queryKey: ['category', params.id],
+    queryFn: () => getCategoryDetailRequest(params.id),
+    enabled: params.id !== null,
   })
