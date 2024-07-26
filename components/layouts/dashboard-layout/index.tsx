@@ -31,7 +31,12 @@ import { Layout } from 'types'
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
   { name: 'Admin', href: '#', icon: FolderIcon, current: false },
-  { name: 'Category', href: '#', icon: FolderIcon, current: false },
+  {
+    name: 'Category',
+    href: '/dashboard/category',
+    icon: FolderIcon,
+    current: false,
+  },
   { name: 'Product', href: '#', icon: FolderIcon, current: false },
   { name: 'Transaction', href: '#', icon: FolderIcon, current: false },
 ]

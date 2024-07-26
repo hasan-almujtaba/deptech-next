@@ -78,13 +78,6 @@ export const ProfileForm = () => {
 
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <Button
-            variant="destructive"
-            className="w-40"
-          >
-            Cancel
-          </Button>
-
-          <Button
             className="w-40"
             type="submit"
           >
