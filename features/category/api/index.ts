@@ -6,7 +6,7 @@ import { TCategoryForm } from '../types'
 
 export const getCategoryRequest = async () => {
   try {
-    const { data } = await axiosInstance.get('/user')
+    const { data } = await axiosInstance.get('/categories')
 
     return data
   } catch (error) {

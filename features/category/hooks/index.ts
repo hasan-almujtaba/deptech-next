@@ -4,6 +4,6 @@ import { getCategoryRequest } from '../api'
 
 export const useGetCategory = () =>
   useQuery({
-    queryKey: ['profile'],
+    queryKey: ['category'],
     queryFn: getCategoryRequest,
   })

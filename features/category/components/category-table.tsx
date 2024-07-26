@@ -10,19 +10,42 @@ export const columnHelper = createColumnHelper<TCategory>()
 export const columns = [
   columnHelper.display({
     id: 'name',
-    size: 10,
     cell: (info) => info.row.original.name,
   }),
   columnHelper.display({
     id: 'description',
-    size: 10,
+    size: 200,
     cell: (info) => info.row.original.description,
+  }),
+  columnHelper.display({
+    id: 'actions',
+    size: 10,
+    cell: (info) => (
+      <>
+        <div className="flex justify-end gap-x-5">
+          <Button
+            className="w-40"
+            asChild
+          >
+            <Link href={`/dashboard/${info.row.original.id}/category/`}>
+              Edit
+            </Link>
+          </Button>
+          <Button
+            className="w-40"
+            variant="destructive"
+          >
+            Delete
+          </Button>
+        </div>
+      </>
+    ),
   }),
 ]
 
 export const CategoryTable = () => {
   const { data } = useGetCategory()
-  const category = data.data
+  const category = data?.data
 
   return (
     <div>

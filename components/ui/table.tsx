@@ -11,8 +11,6 @@ import { useEffect, useState } from 'react'
 import { Dispatch, ReactNode, SetStateAction } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { Pagination } from './pagination'
-
 type TProps<T> = {
   data?: T[]
   totalData?: number
@@ -84,7 +82,7 @@ export const DataTable = <T,>(props: TProps<T>) => {
 
   return (
     <div>
-      {hasData ? (
+      {/* {hasData ? (
         <div className="mb-[27px] flex items-center justify-between">
           {!hideTopPagination && (
             <Pagination
@@ -95,7 +93,7 @@ export const DataTable = <T,>(props: TProps<T>) => {
 
           {rightHeaderNode && rightHeaderNode}
         </div>
-      ) : undefined}
+      ) : undefined} */}
 
       <table className="w-full text-sm">
         <thead className="border-b pb-2">
@@ -155,7 +153,7 @@ export const DataTable = <T,>(props: TProps<T>) => {
           </tbody>
         )}
       </table>
-
+      {/* 
       {hasData && !hideBottomPagination ? (
         <div className="mt-4">
           <Pagination
@@ -163,7 +161,7 @@ export const DataTable = <T,>(props: TProps<T>) => {
             table={table}
           />
         </div>
-      ) : undefined}
+      ) : undefined} */}
     </div>
   )
 }

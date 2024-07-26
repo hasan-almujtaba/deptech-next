@@ -26,7 +26,7 @@ export const Pagination = <T,>(props: TProps<T>) => {
         </button>
 
         <button
-          className="flex h-[30px] w-[30px] rotate-90 items-center justify-center rounded-full transition-colors hover:bg-[#FCB017] hover:text-white disabled:text-[#C1C1C1] disabled:hover:bg-transparent"
+          className="flex h-[30px] w-[30px] items-center justify-center rounded-full transition-colors hover:bg-[#FCB017] hover:text-white disabled:text-[#C1C1C1] disabled:hover:bg-transparent"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
