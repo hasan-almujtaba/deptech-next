@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 
 import { axiosInstance } from 'apis'
 
@@ -46,8 +46,10 @@ export const updateCategoryRequest = async (dataRequest: TCategoryForm) => {
 
     return data
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      return null
+    if (error instanceof AxiosError) {
+      const errorStringified = JSON.stringify(error.response?.data.errors)
+
+      throw errorStringified
     }
   }
 }

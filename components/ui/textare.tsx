@@ -11,7 +11,10 @@ type TProps = {
 export const Textarea = (props: TProps) => {
   const { label, name = '', errorMessage, ...rest } = props
 
-  const { register } = useFormContext()
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext()
 
   return (
     <Field>
@@ -28,9 +31,9 @@ export const Textarea = (props: TProps) => {
         {...register(name)}
       ></HeadlessTextarea>
 
-      {errorMessage && (
+      {errors[name] && (
         <div className="pointer-events-none mt-1 flex items-center pr-3">
-          {errorMessage}
+          {errors[name].message as string}
         </div>
       )}
     </Field>

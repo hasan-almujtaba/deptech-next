@@ -26,7 +26,7 @@ export const EditCategoryForm = () => {
   const category = data?.data
 
   const formMethods = useForm<TCategoryForm>()
-  const { handleSubmit, control, setValue } = formMethods
+  const { handleSubmit, control, setValue, setError } = formMethods
 
   useEffect(() => {
     if (category) {
@@ -44,16 +44,31 @@ export const EditCategoryForm = () => {
     mutationFn: (data: TCategoryForm) => updateCategoryRequest(data),
     onSuccess: () => {
       invalidateQueries()
-      toast.success('Successfully update category')
-      //   push('/dashboard/category')
+      toast.success('Successfully updated category')
+      push('/dashboard/category')
     },
-    onError: (errors) => {
-      console.log(errors)
-      console.log(typeof errors)
-      console.log(Object.keys(errors))
-      for (const field of Object.keys(errors)) {
-        console.log(field)
-        console.log('field')
+    onError: (error: any) => {
+      let parsedErrors
+      if (typeof error === 'string') {
+        try {
+          parsedErrors = JSON.parse(error)
+        } catch {
+          toast.error('An unexpected error occurred')
+          return
+        }
+      } else {
+        parsedErrors = error
+      }
+
+      if (parsedErrors && typeof parsedErrors === 'object') {
+        for (const [key, value] of Object.entries(parsedErrors)) {
+          setError(key as any, {
+            type: 'manual',
+            message: value as any,
+          })
+        }
+      } else {
+        toast.error('An unexpected error occurred')
       }
     },
   })
