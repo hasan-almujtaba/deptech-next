@@ -3,7 +3,11 @@ import Link from 'next/link'
 
 import { Button } from 'components/ui/button'
 import { DataTable } from 'components/ui/table'
-import { TCategory, useGetCategories } from 'features/category'
+import {
+  CategoryTableAction,
+  TCategory,
+  useGetCategories,
+} from 'features/category'
 
 export const columnHelper = createColumnHelper<TCategory>()
 
@@ -20,26 +24,7 @@ export const columns = [
   columnHelper.display({
     id: 'actions',
     size: 10,
-    cell: (info) => (
-      <>
-        <div className="flex justify-end gap-x-5">
-          <Button
-            className="w-40"
-            asChild
-          >
-            <Link href={`/dashboard/category/${info.row.original.id}/edit/`}>
-              Edit
-            </Link>
-          </Button>
-          <Button
-            className="w-40"
-            variant="destructive"
-          >
-            Delete
-          </Button>
-        </div>
-      </>
-    ),
+    cell: (info) => <CategoryTableAction id={info.row.original.id} />,
   }),
 ]
 

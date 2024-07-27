@@ -47,7 +47,7 @@ export const EditCategoryForm = () => {
       toast.success('Successfully updated category')
       push('/dashboard/category')
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       let parsedErrors
       if (typeof error === 'string') {
         try {
@@ -62,9 +62,9 @@ export const EditCategoryForm = () => {
 
       if (parsedErrors && typeof parsedErrors === 'object') {
         for (const [key, value] of Object.entries(parsedErrors)) {
-          setError(key as any, {
+          setError(key as never, {
             type: 'manual',
-            message: value as any,
+            message: value as never,
           })
         }
       } else {

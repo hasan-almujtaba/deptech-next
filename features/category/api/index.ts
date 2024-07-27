@@ -53,3 +53,17 @@ export const updateCategoryRequest = async (dataRequest: TCategoryForm) => {
     }
   }
 }
+
+export const deleteCategoryRequest = async (id: number) => {
+  try {
+    const { data } = await axiosInstance.delete(`/categories/${id}`)
+
+    return data
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return null
+    }
+
+    throw new Error('Unexpected Error')
+  }
+}

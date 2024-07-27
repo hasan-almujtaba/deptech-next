@@ -29,84 +29,42 @@ import { useGetProfile } from 'features/auth'
 import { Layout } from 'types'
 
 const navigation = [
-  { name: 'Dashboard', href: '/dashboard', icon: HomeIcon, current: true },
-  { name: 'Admin', href: '#', icon: FolderIcon, current: false },
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: HomeIcon,
+    links: ['/dashboard'],
+  },
+  { name: 'Admin', href: '#', icon: FolderIcon, links: ['/dashboard/admin'] },
   {
     name: 'Category',
     href: '/dashboard/category',
     icon: FolderIcon,
-    current: false,
+    links: [
+      '/dashboard/category',
+      '/dashboard/category/create',
+      '/dashboard/category/[id]/edit',
+    ],
   },
-  { name: 'Product', href: '#', icon: FolderIcon, current: false },
-  { name: 'Transaction', href: '#', icon: FolderIcon, current: false },
+  {
+    name: 'Product',
+    href: '#',
+    icon: FolderIcon,
+    links: ['/dashboard/product'],
+  },
+  {
+    name: 'Transaction',
+    href: '#',
+    icon: FolderIcon,
+    links: ['/dashboard/transaction'],
+  },
 ]
 
-const MobileSidebar = () => (
-  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
-    <div className="flex h-16 shrink-0 items-center">
-      <img
-        className="h-8 w-auto"
-        src="https://tailwindui.com/img/logos/mark.svg?color=slate&shade=600"
-        alt="Your Company"
-      />
-    </div>
-    <nav className="flex flex-1 flex-col">
-      <ul
-        role="list"
-        className="flex flex-1 flex-col gap-y-7"
-      >
-        <li>
-          <ul
-            role="list"
-            className="-mx-2 space-y-1"
-          >
-            {navigation.map((item) => (
-              <li key={item.name}>
-                <Link
-                  href={item.href}
-                  className={twMerge(
-                    item.current
-                      ? 'bg-gray-50 text-slate-600'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-slate-600',
-                    'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
-                  )}
-                >
-                  <item.icon
-                    className={twMerge(
-                      item.current
-                        ? 'text-slate-600'
-                        : 'text-gray-400 group-hover:text-slate-600',
-                      'h-6 w-6 shrink-0'
-                    )}
-                    aria-hidden="true"
-                  />
-                  {item.name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </li>
-        <li className="mt-auto">
-          <a
-            href="#"
-            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-slate-600"
-          >
-            <Cog6ToothIcon
-              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-slate-600"
-              aria-hidden="true"
-            />
-            Settings
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
-)
+const MobileSidebar = () => {
+  const { pathname } = useRouter()
 
-const DesktopSidebar = () => (
-  <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-    {/* Sidebar component, swap this element with another sidebar if you like */}
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+  return (
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
       <div className="flex h-16 shrink-0 items-center">
         <img
           className="h-8 w-auto"
@@ -129,7 +87,7 @@ const DesktopSidebar = () => (
                   <Link
                     href={item.href}
                     className={twMerge(
-                      item.current
+                      item.links.includes(pathname)
                         ? 'bg-gray-50 text-slate-600'
                         : 'text-gray-700 hover:bg-gray-50 hover:text-slate-600',
                       'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
@@ -137,7 +95,7 @@ const DesktopSidebar = () => (
                   >
                     <item.icon
                       className={twMerge(
-                        item.current
+                        item.links.includes(pathname)
                           ? 'text-slate-600'
                           : 'text-gray-400 group-hover:text-slate-600',
                         'h-6 w-6 shrink-0'
@@ -150,12 +108,80 @@ const DesktopSidebar = () => (
               ))}
             </ul>
           </li>
+          <li className="mt-auto">
+            <a
+              href="#"
+              className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-slate-600"
+            >
+              <Cog6ToothIcon
+                className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-slate-600"
+                aria-hidden="true"
+              />
+              Settings
+            </a>
+          </li>
         </ul>
       </nav>
     </div>
-  </div>
-)
+  )
+}
 
+const DesktopSidebar = () => {
+  const { pathname } = useRouter()
+
+  return (
+    <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
+      {/* Sidebar component, swap this element with another sidebar if you like */}
+      <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+        <div className="flex h-16 shrink-0 items-center">
+          <img
+            className="h-8 w-auto"
+            src="https://tailwindui.com/img/logos/mark.svg?color=slate&shade=600"
+            alt="Your Company"
+          />
+        </div>
+        <nav className="flex flex-1 flex-col">
+          <ul
+            role="list"
+            className="flex flex-1 flex-col gap-y-7"
+          >
+            <li>
+              <ul
+                role="list"
+                className="-mx-2 space-y-1"
+              >
+                {navigation.map((item) => (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      className={twMerge(
+                        item.links.includes(pathname)
+                          ? 'bg-gray-50 text-slate-600'
+                          : 'text-gray-700 hover:bg-gray-50 hover:text-slate-600',
+                        'group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6'
+                      )}
+                    >
+                      <item.icon
+                        className={twMerge(
+                          item.links.includes(pathname)
+                            ? 'text-slate-600'
+                            : 'text-gray-400 group-hover:text-slate-600',
+                          'h-6 w-6 shrink-0'
+                        )}
+                        aria-hidden="true"
+                      />
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  )
+}
 export function DashboardLayout({ children }: Layout) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
