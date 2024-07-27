@@ -48,7 +48,7 @@ const navigation = [
   },
   {
     name: 'Product',
-    href: '#',
+    href: '/dashboard/product',
     icon: FolderIcon,
     links: ['/dashboard/product'],
   },
