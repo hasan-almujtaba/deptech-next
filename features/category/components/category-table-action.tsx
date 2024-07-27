@@ -8,7 +8,7 @@ import withReactContent from 'sweetalert2-react-content'
 import { Button } from 'components/ui/button'
 import { useQueryActions } from 'hooks'
 
-import { deleteCategoryRequest } from '../api'
+import { deleteCategoryRequest } from '../apis'
 
 export type TProps = {
   id: number

@@ -1,8 +1,7 @@
 import axios, { AxiosError } from 'axios'
 
 import { axiosInstance } from 'apis'
-
-import { TCategoryForm } from '../types'
+import { TCategoryForm } from 'features/category'
 
 export const getCategoryRequest = async () => {
   try {

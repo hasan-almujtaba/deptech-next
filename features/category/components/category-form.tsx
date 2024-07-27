@@ -9,7 +9,7 @@ import { Input } from 'components/ui/input'
 import { Textarea } from 'components/ui/textare'
 import { useQueryActions } from 'hooks'
 
-import { storeCategoryRequest } from '../api'
+import { storeCategoryRequest } from '../apis'
 import { TCategoryForm } from '../types'
 
 export const CategoryForm = () => {

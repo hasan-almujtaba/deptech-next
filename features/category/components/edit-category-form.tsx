@@ -10,7 +10,7 @@ import { Input } from 'components/ui/input'
 import { Textarea } from 'components/ui/textare'
 import { useQueryActions } from 'hooks'
 
-import { updateCategoryRequest } from '../api'
+import { updateCategoryRequest } from '../apis'
 import { useGetCategory } from '../hooks'
 import { TCategoryForm } from '../types'
 
