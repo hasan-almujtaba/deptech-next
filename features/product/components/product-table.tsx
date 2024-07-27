@@ -40,7 +40,7 @@ export const ProductTable = () => {
     <div>
       <div className="text-right">
         <Button asChild>
-          <Link href="/dashboard/category/create">Add New Product</Link>
+          <Link href="/dashboard/product/create">Add New Product</Link>
         </Button>
       </div>
 
