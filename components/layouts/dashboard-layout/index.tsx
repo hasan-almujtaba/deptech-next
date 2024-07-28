@@ -50,7 +50,11 @@ const navigation = [
     name: 'Product',
     href: '/dashboard/product',
     icon: FolderIcon,
-    links: ['/dashboard/product', '/dashboard/product/create'],
+    links: [
+      '/dashboard/product',
+      '/dashboard/product/create',
+      '/dashboard/product/[id]/edit',
+    ],
   },
   {
     name: 'Transaction',

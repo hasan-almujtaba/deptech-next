@@ -1,6 +1,5 @@
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
@@ -17,9 +16,7 @@ export type TProps = {
 export const ProductTableAction = (props: TProps) => {
   const { id } = props
 
-  const editUrl = `/dashboard/category/${id}/edit/`
-
-  const { push } = useRouter()
+  const editUrl = `/dashboard/product/${id}/edit/`
 
   const confirmSwal = withReactContent(Swal)
 

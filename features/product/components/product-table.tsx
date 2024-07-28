@@ -3,19 +3,34 @@ import Link from 'next/link'
 
 import { Button } from 'components/ui/button'
 import { DataTable } from 'components/ui/table'
-import { TCategory } from 'features/category'
 import { useGetProducts } from 'features/product'
 import { createColumn } from 'utils'
 
+import { TProduct } from '../types'
+
 import { ProductTableAction } from './product-table-action'
 
-export const columnHelper = createColumnHelper<TCategory>()
+const baseUrl = process.env.NEXT_PUBLIC_API_URL
+
+export const columnHelper = createColumnHelper<TProduct>()
 
 export const columns = [
   columnHelper.display({
+    id: 'image',
+    header: () =>
+      createColumn('Image', 'text-left text-[#202124] font-bold text-sm'),
+    cell: (info) => (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={baseUrl + '/uploads/' + info.row.original.image}
+        alt="image"
+      />
+    ),
+  }),
+  columnHelper.display({
     id: 'name',
     header: () =>
-      createColumn('Nama', 'text-left text-[#202124] font-bold text-sm'),
+      createColumn('Name', 'text-left text-[#202124] font-bold text-sm'),
     cell: (info) => info.row.original.name,
   }),
   columnHelper.display({

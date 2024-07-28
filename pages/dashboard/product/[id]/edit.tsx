@@ -1,25 +1,25 @@
 import Head from 'next/head'
 
 import { DashboardLayout } from 'components/layouts'
-import { AddProductForm } from 'features/product'
+import { EditProductForm } from 'features/product'
 import { NextPageWithLayout } from 'types'
 
-const ProductCreate: NextPageWithLayout = () => {
+const ProductEdit: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Product Create</title>
+        <title>Product Edit</title>
       </Head>
 
       <div className="divide-y divide-white/5">
-        <AddProductForm />
+        <EditProductForm />
       </div>
     </>
   )
 }
 
-ProductCreate.getLayout = (page) => {
+ProductEdit.getLayout = (page) => {
   return <DashboardLayout>{page}</DashboardLayout>
 }
 
-export default ProductCreate
+export default ProductEdit
