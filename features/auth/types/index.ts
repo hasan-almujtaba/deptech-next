@@ -3,12 +3,21 @@ export type TLoginRequest = {
   password: string
 }
 
-export type TUpdateProfileRequest = {
+export type TUpdateProfileForm = {
   id: number
   firstName: string
   lastName: string
   email: string
   password: string
-  gender: string
+  gender: {
+    label: string
+    value: string
+  }
   dateOfBirth: string
+}
+
+type OmitGender = Omit<TUpdateProfileForm, 'gender'>
+
+export type TUpdateProfileRequest = OmitGender & {
+  gender: string
 }

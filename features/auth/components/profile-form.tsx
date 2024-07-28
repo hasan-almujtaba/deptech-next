@@ -1,13 +1,20 @@
 import { useMutation } from '@tanstack/react-query'
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 import { Button } from 'components/ui/button'
 import { Input } from 'components/ui/input'
+import { Select } from 'components/ui/select'
 import { useQueryActions } from 'hooks'
 
 import { updateProfileRequest } from '../apis'
 import { useGetProfile } from '../hooks'
-import { TUpdateProfileRequest } from '../types'
+import { TUpdateProfileForm, TUpdateProfileRequest } from '../types'
+
+const genderOptions = [
+  { label: 'Male', value: 'Male' },
+  { label: 'Female', value: 'Female' },
+]
 
 export const ProfileForm = () => {
   const { data } = useGetProfile()
@@ -18,14 +25,15 @@ export const ProfileForm = () => {
     mutationFn: (data: TUpdateProfileRequest) => updateProfileRequest(data),
     onSuccess: () => {
       invalidateQueries()
+      toast.success('Profile updated')
     },
   })
 
-  const methods = useForm<TUpdateProfileRequest>({
+  const methods = useForm<TUpdateProfileForm>({
     defaultValues: {
       id: user.id,
       dateOfBirth: user.dateOfBirth,
-      gender: user.gender,
+      gender: genderOptions.find((item) => item.value === user.gender),
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
@@ -33,8 +41,8 @@ export const ProfileForm = () => {
   })
   const { handleSubmit } = methods
 
-  const onSubmit: SubmitHandler<TUpdateProfileRequest> = (data) => {
-    mutate(data)
+  const onSubmit: SubmitHandler<TUpdateProfileForm> = (data) => {
+    mutate({ ...data, gender: data.gender.value })
   }
 
   return (
@@ -70,6 +78,21 @@ export const ProfileForm = () => {
                   label="Email address"
                   name="email"
                   type="email"
+                />
+              </div>
+
+              <div className="sm:col-span-3">
+                <Input
+                  label="Date Of Birth"
+                  name="dateOfBirth"
+                  type="date"
+                />
+              </div>
+              <div className="sm:col-span-3">
+                <Select
+                  label="Gender"
+                  name="gender"
+                  options={genderOptions}
                 />
               </div>
             </div>
