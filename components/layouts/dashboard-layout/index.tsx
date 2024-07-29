@@ -58,9 +58,13 @@ const navigation = [
   },
   {
     name: 'Transaction',
-    href: '#',
+    href: '/dashboard/transaction',
     icon: FolderIcon,
-    links: ['/dashboard/transaction'],
+    links: [
+      '/dashboard/transaction',
+      '/dashboard/transaction/create',
+      '/dashboard/transaction/[id]/edit',
+    ],
   },
 ]
 
