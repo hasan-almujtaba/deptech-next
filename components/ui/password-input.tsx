@@ -2,6 +2,7 @@ import { Field, Label, Input as HeadlessInput } from '@headlessui/react'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/20/solid'
 import { InputHTMLAttributes, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { twMerge } from 'tailwind-merge'
 
 type TProps = {
   label: string
@@ -22,7 +23,14 @@ export const PasswordInput = (props: TProps) => {
       <Label className="block text-sm font-medium leading-6 text-gray-900">
         {label}
       </Label>
-      <div className="flex h-9 rounded-md border border-gray-300 px-0.5 py-1.5 text-gray-900 shadow-sm ring-inset ring-gray-300 placeholder:text-gray-400 focus-within:ring-2 focus-within:ring-inset focus-within:ring-slate-900">
+      <div
+        className={twMerge(
+          'flex h-9 rounded-md border px-0.5 py-1.5 shadow-sm ring-inset focus-within:ring-1 focus-within:ring-inset',
+          errorMessage
+            ? 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-red-600'
+            : 'border-gray-800 text-gray-900 ring-green-300 placeholder:text-gray-400 focus:ring-yellow-900'
+        )}
+      >
         <HeadlessInput
           type={type}
           className="h-full flex-1 rounded-md border-0 ring-0 focus:ring-0 focus:ring-transparent sm:text-sm sm:leading-6"

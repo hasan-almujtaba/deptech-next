@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import {
@@ -112,6 +111,7 @@ export const TransactionForm = () => {
                       <Input
                         label="Quantity"
                         name={`item.${index}.quantity` as const}
+                        type="number"
                       />
                     </div>
 
@@ -151,7 +151,7 @@ export const TransactionForm = () => {
         </form>
       </FormProvider>
 
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
     </>
   )
 }

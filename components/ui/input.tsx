@@ -23,15 +23,17 @@ export const Input = (props: TProps) => {
       </Label>
       <HeadlessInput
         className={twMerge(
-          'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-900 sm:text-sm sm:leading-6',
-          errorMessage && 'border-red-600'
+          'block w-full rounded-md py-1.5 shadow-sm ring-inset focus:ring-1 focus:ring-inset sm:text-sm sm:leading-6',
+          errorMessage
+            ? 'border-red-600 ring-red-600 focus:border-red-600 focus:ring-red-600'
+            : 'text-gray-900 ring-green-300 placeholder:text-gray-400 focus:border-gray-800 focus:ring-yellow-900'
         )}
         {...rest}
         {...register(name)}
       ></HeadlessInput>
 
       {errors[name] && (
-        <div className="pointer-events-none mt-1 flex items-center pr-3">
+        <div className="pointer-events-none mt-1 flex items-center pr-3 font-light text-red-600">
           {errors[name].message as string}
         </div>
       )}
