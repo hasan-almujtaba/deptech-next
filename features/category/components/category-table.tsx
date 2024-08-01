@@ -8,16 +8,21 @@ import {
   TCategory,
   useGetCategories,
 } from 'features/category'
+import { createColumn } from 'utils'
 
 export const columnHelper = createColumnHelper<TCategory>()
 
 export const columns = [
   columnHelper.display({
     id: 'name',
+    header: () =>
+      createColumn('Name', 'text-left text-[#202124] font-bold text-sm'),
     cell: (info) => info.row.original.name,
   }),
   columnHelper.display({
     id: 'description',
+    header: () =>
+      createColumn('Description', 'text-left text-[#202124] font-bold text-sm'),
     size: 200,
     cell: (info) => info.row.original.description,
   }),

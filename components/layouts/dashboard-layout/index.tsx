@@ -35,7 +35,6 @@ const navigation = [
     icon: HomeIcon,
     links: ['/dashboard'],
   },
-  { name: 'Admin', href: '#', icon: FolderIcon, links: ['/dashboard/admin'] },
   {
     name: 'Category',
     href: '/dashboard/category',

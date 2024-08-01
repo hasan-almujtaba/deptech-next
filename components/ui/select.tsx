@@ -57,7 +57,7 @@ export const Select = <TFormValues extends Record<string, unknown>>(
       {label && (
         <label
           htmlFor={id ?? generatedId}
-          className="mb-2 block text-sm font-bold"
+          className="block text-sm font-bold"
         >
           {label}
           {isRequired && <sup className="text-[#DF0000]">*</sup>}
@@ -99,7 +99,7 @@ export const Select = <TFormValues extends Record<string, unknown>>(
                     }
                   : {
                       ...provided,
-                      height: '38px',
+                      height: '36px',
                     },
               control: (styles, { isDisabled }) => ({
                 ...styles,
@@ -107,6 +107,7 @@ export const Select = <TFormValues extends Record<string, unknown>>(
                 color: isDisabled ? '#F1F1F1' : '#C1C1C1',
                 borderColor: '#C1C1C1',
                 fontSize: '14px',
+                borderRadius: '6px',
               }),
               option: (styles) => ({
                 ...styles,

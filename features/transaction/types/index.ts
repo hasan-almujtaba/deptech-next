@@ -23,3 +23,22 @@ export type Product = {
   categoryId: number
   transactionId: null
 }
+
+export type TTransactionForm = {
+  type: {
+    label: string
+    value: 'STOCK_IN' | 'STOCK_OUT'
+  }
+  item: {
+    productId: { label: string; value: number }
+    quantity: number
+  }[]
+}
+
+export type TTransactionRequest = {
+  type: 'STOCK_IN' | 'STOCK_OUT'
+  items: {
+    productId: number
+    quantity: number
+  }[]
+}

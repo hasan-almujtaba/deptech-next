@@ -41,7 +41,10 @@ export const storeCategoryRequest = async (dataRequest: TCategoryForm) => {
 
 export const updateCategoryRequest = async (dataRequest: TCategoryForm) => {
   try {
-    const { data } = await axiosInstance.put('/categories', dataRequest)
+    const { data } = await axiosInstance.put(
+      `/categories/${dataRequest.id}`,
+      dataRequest
+    )
 
     return data
   } catch (error) {
